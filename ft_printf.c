@@ -6,17 +6,13 @@
 /*   By: serraoui <serraoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 17:09:57 by serraoui          #+#    #+#             */
-/*   Updated: 2023/11/12 17:48:12 by serraoui         ###   ########.fr       */
+/*   Updated: 2023/11/15 21:03:50 by serraoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-#include <stdarg.h>
+#include "ft_printf.h"
 
-int count_args(const char *s)
+static int	count_args(const char *s)
 {
 	int count;
 	int i;
@@ -32,172 +28,58 @@ int count_args(const char *s)
 	return (count);
 }
 
-void	ft_putchar_fd(char c, int fd)
+static void	ft_printf_args(char *s, va_list *args, int *len, int pos)
 {
-	write(fd, &c, 1);
-}
-
-void	ft_putstr_fd(char *s, int fd)
-{
-	int	i;
-
-	i = 0;
-	if (s)
+	if (s[pos] == 'c')
+		ft_putchar(va_arg(*args, int), len);
+	else if (s[pos] == 'i' || s[pos] == 'd')
+		ft_putnbr(va_arg(*args, int), len);
+	else if (s[pos] == 'u')
+		ft_putnbr_unsigned(va_arg(*args, unsigned int), len);
+	else if (s[pos] == 'x')
+		ft_puthex(va_arg(*args, unsigned int), len);
+	else if (s[pos] == 'X')
+		ft_puthex_upper(va_arg(*args, unsigned int), len);
+	else if (s[pos] == 'p')
 	{
-		while (s[i])
-		{
-			write(fd, &s[i], 1);
-			i++;
-		}
+		ft_putstr("0x", len);
+		ft_putptr(va_arg(*args, unsigned long), len);
 	}
-}
-
-void	ft_putnbr_fd(int n, int fd)
-{
-	unsigned int	number;
-
-	number = (unsigned int)n;
-	if (n < 0)
+	else if (s[pos] == 's')
 	{
-		ft_putchar_fd('-', fd);
-		number = n * -1;
+		if (!ft_putstr(va_arg(*args, char *), len))
+			ft_putstr("(null)", len);
 	}
-	if (number <= 9)
-		ft_putchar_fd(number + '0', fd);
-	if (number > 9)
-	{
-		ft_putnbr_fd(number / 10, fd);
-		ft_putchar_fd(number % 10 + '0', fd);
-	}
+	else
+		ft_putchar(s[pos], len);
 }
 
-void    ft_puthex_upper_fd(int n, int fd)
-{
-    unsigned int number;
-
-    number = (unsigned int)n;
-    if(number <= 16)
-    {
-        if (number < 10)
-            ft_putchar_fd(number + '0', fd);   
-        else
-            ft_putchar_fd(number + '7', fd);
-    }
-    else {
-        ft_puthex_upper_fd(number / 16, fd);
-        if ((number % 16) < 10)
-            ft_putchar_fd((number % 16) + '0', fd);   
-        else
-            ft_putchar_fd((number % 16) + '7', fd);
-    }
-}
-
-
-int	ft_tolower(int c)
-{
-	if (c >= 'A' && c <= 'Z')
-		return (c + 32);
-	return (c);
-}
-
-void    ft_puthex_fd(int n, int fd)
-{
-    unsigned int number;
-
-    number = (unsigned int)n;
-    if(number <= 16)
-    {
-        if (number < 10)
-            ft_putchar_fd(number + '0', fd);   
-        else
-            ft_putchar_fd(ft_tolower(number + '7'), fd);
-    }
-    else {
-        ft_puthex_fd(number / 16, fd);
-        if ((number % 16) < 10)
-            ft_putchar_fd((number % 16) + '0', fd);   
-        else
-            ft_putchar_fd(ft_tolower((number % 16) + '7'), fd);
-    }
-}
-
-void    ft_putptr_fd(unsigned long number, int fd)
-{
-    if(number <= 16)
-    {
-        if (number < 10)
-            ft_putchar_fd(number + '0', fd);   
-        else
-            ft_putchar_fd(number + '7', fd);
-    }
-    else {
-        ft_puthex_upper_fd(number / 16, fd);
-        if ((number % 16) < 10)
-            ft_putchar_fd((number % 16) + '0', fd);   
-        else
-            ft_putchar_fd((number % 16) + '7', fd);
-    }
-}
-
-int ft_printf(const char *s, ...)
+int	ft_printf(const char *s, ...)
 {
 	//Todo : Learn more about va_start, va_arg, va_copy and va_end
 	//Todo : Return the number of arguments processed ?
 	//Todo : Loop on the char on the param and check wether it is on of the conversions after the '%' char is found
-	//Todo : Call specific method for each type of conversion {'%:done', 'c:done', 's:done', 'p:done', 'd:done', 'i:done', 'u', 'x:done', 'X:done'}
-	char	conv_ident;
-	int		i;
+	//Todo : Call specific method for each type of conversion {'%:done', 'c:done', 's:done', 'p:done', 'd:done', 'i:done', 'u:done', 'x:done', 'X:done'}
 	va_list	args;
-	size_t	len_s;
+	int		i;
+	int		len;
 
+	i = 0;
+	len = 0;
 	if (!count_args(s))
 	{
-		ft_putstr_fd((char *)s, 1);
-		return (0);
+		ft_putstr((char *)s, &len);
+		return (len);
 	}
-	i = 0;
 	va_start(args, s);
-	while(s[i])
+	while (s[i])
 	{
 		if(s[i] == '%' && s[i + 1])
-		{
-			//Todo : pass this logic to another function due to norminette limit break - 25 lines per function
-			conv_ident = s[i + 1];
-			//Todo : calls a function that distinguish which of conversion we have
-			if (conv_ident == 'c')
-				ft_putchar_fd(va_arg(args, int), 1);
-			else if (conv_ident == 's')
-				ft_putstr_fd(va_arg(args, char *), 1);
-			else if (conv_ident == '%')
-				ft_putchar_fd('%', 1);
-			else if (conv_ident == 'i' || conv_ident == 'd')
-				ft_putnbr_fd(va_arg(args, int), 1);
-			else if (conv_ident == 'x')
-				ft_puthex_fd(va_arg(args, unsigned int), 1);
-			else if (conv_ident == 'X')
-				ft_puthex_upper_fd(va_arg(args, unsigned int), 1);
-			else if (conv_ident == 'p')
-			{
-				ft_putstr_fd("0x", 1);
-				ft_putptr_fd(va_arg(args, unsigned long), 1);
-			}
-			else
-				ft_putchar_fd(s[i + 1], 1);
-			i++;
-		}
-		else {
-			ft_putchar_fd(s[i], 1);
-		}
-		i++;
+			ft_printf_args((char *)s, &args, &len, ++i);
+		else
+			ft_putchar(s[i], &len);
+		i++;	
 	}
 	va_end(args);
-	return (count_args(args));
-}
-
-int main()
-{
-	char *p;
-	int count = ft_printf("-----%p \n", 0xFFFFFFFF);
-	printf("%d\n", 0xFF);
-	return (0);
+	return (len);
 }

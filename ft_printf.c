@@ -6,7 +6,7 @@
 /*   By: serraoui <serraoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 17:09:57 by serraoui          #+#    #+#             */
-/*   Updated: 2023/11/15 21:03:50 by serraoui         ###   ########.fr       */
+/*   Updated: 2023/11/17 23:03:01 by serraoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,15 @@ static void	ft_printf_args(char *s, va_list *args, int *len, int pos)
 	else if (s[pos] == 'i' || s[pos] == 'd')
 		ft_putnbr(va_arg(*args, int), len);
 	else if (s[pos] == 'u')
-		ft_putnbr_unsigned(va_arg(*args, unsigned int), len);
+		ft_print_base(va_arg(*args, unsigned int), "0123456789", 10, len);
 	else if (s[pos] == 'x')
-		ft_puthex(va_arg(*args, unsigned int), len);
+		ft_print_base(va_arg(*args, unsigned int), "0123456789abcdef", 16, len);
 	else if (s[pos] == 'X')
-		ft_puthex_upper(va_arg(*args, unsigned int), len);
+		ft_print_base(va_arg(*args, unsigned int), "0123456789ABCDEF", 16, len);
 	else if (s[pos] == 'p')
 	{
 		ft_putstr("0x", len);
-		ft_putptr(va_arg(*args, unsigned long), len);
+		ft_print_base(va_arg(*args, unsigned long), "0123456789abcdef", 16, len);
 	}
 	else if (s[pos] == 's')
 	{

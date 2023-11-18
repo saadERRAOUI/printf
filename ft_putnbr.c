@@ -6,7 +6,7 @@
 /*   By: serraoui <serraoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 17:35:39 by serraoui          #+#    #+#             */
-/*   Updated: 2023/11/15 21:03:34 by serraoui         ###   ########.fr       */
+/*   Updated: 2023/11/18 12:00:43 by serraoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,6 @@ void	ft_putnbr(int n, int *len)
 	if (number > 9)
 	{
 		ft_putnbr(number / 10, len);
-		ft_putchar(number % 10 + '0', len);
-	}
-}
-
-void	ft_putnbr_unsigned(unsigned int number, int *len)
-{
-	if (number <= 9)
-		ft_putchar(number + '0', len);
-	if (number > 9)
-	{
-		ft_putnbr_unsigned(number / 10, len);
 		ft_putchar(number % 10 + '0', len);
 	}
 }

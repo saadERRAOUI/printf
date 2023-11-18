@@ -6,7 +6,7 @@
 /*   By: serraoui <serraoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 17:32:39 by serraoui          #+#    #+#             */
-/*   Updated: 2023/11/15 00:27:09 by serraoui         ###   ########.fr       */
+/*   Updated: 2023/11/18 12:03:49 by serraoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_putstr(char *s, int *len)
 	int	i;
 
 	i = 0;
-	if(!s)
+	if (!s)
 		return (0);
 	if (s)
 	{

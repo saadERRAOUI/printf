@@ -6,29 +6,13 @@
 /*   By: serraoui <serraoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 17:09:57 by serraoui          #+#    #+#             */
-/*   Updated: 2023/11/18 16:22:12 by serraoui         ###   ########.fr       */
+/*   Updated: 2023/11/19 00:01:06 by serraoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	count_args(const char *s)
-{
-	int	count;
-	int	i;
-
-	i = 0;
-	count = 0;
-	while (s[i])
-	{
-		if (s[i] == '%' && s[i + 1] != '%')
-			count++;
-		i++;
-	}
-	return (count);
-}
-
-static void	ft_printf_args(char *s, va_list *args, int *l, int pos)
+void	ft_printf_args(const char *s, va_list *args, int *l, int pos)
 {
 	if (s[pos] == 'c')
 		ft_putchar(va_arg(*args, int), l);
@@ -54,37 +38,23 @@ static void	ft_printf_args(char *s, va_list *args, int *l, int pos)
 		ft_putchar(s[pos], l);
 }
 
-int	ft_isprint(int c)
-{
-	if (c >= 32 && c <= 126)
-		return (1);
-	return (0);
-}
-
 int	ft_printf(const char *s, ...)
 {
 	va_list	args;
 	int		i;
-	int		len;
+	int		ret;
 
 	i = 0;
-	len = 0;
-	if (!count_args(s))
-	{
-		ft_putstr((char *)s, &len);
-		return (len);
-	}
+	ret = 0;
 	va_start(args, s);
 	while (s[i])
 	{
-		if (!ft_isprint(s[i]))
-			return (-1);
 		if (s[i] == '%' && s[i + 1])
-			ft_printf_args((char *)s, &args, &len, ++i);
+			ft_printf_args(s, &args, &ret, ++i);
 		else
-			ft_putchar(s[i], &len);
+			ft_putchar(s[i], &ret);
 		i++;
 	}
 	va_end(args);
-	return (len);
+	return (ret);
 }

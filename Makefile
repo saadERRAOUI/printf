@@ -7,7 +7,7 @@ OBJECTS = $(SOURCES:.c=.o)
 all : $(NAME)
 
 $(NAME) :
-	gcc -c $(SOURCES)
+	gcc -c -Wextra -Wall -Werror $(SOURCES)
 	ar -rc $(NAME) $(OBJECTS)
 
 clean :

@@ -6,7 +6,7 @@
 /*   By: serraoui <serraoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 17:09:57 by serraoui          #+#    #+#             */
-/*   Updated: 2023/11/20 17:14:46 by serraoui         ###   ########.fr       */
+/*   Updated: 2023/12/01 20:30:04 by serraoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ int	ft_printf(const char *s, ...)
 	va_start(args, s);
 	while (s[i])
 	{
-		if (s[i] == '%')
+		if (s[i] == '%' && s[i + 1])
 			ft_printf_args(s, &args, &ret, ++i);
-		else
+		else if (s[i] != '%')
 			ft_putchar(s[i], &ret);
 		i++;
 	}

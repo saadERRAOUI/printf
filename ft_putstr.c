@@ -6,24 +6,24 @@
 /*   By: serraoui <serraoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 17:32:39 by serraoui          #+#    #+#             */
-/*   Updated: 2023/11/18 16:50:30 by serraoui         ###   ########.fr       */
+/*   Updated: 2023/12/06 12:07:58 by serraoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_putstr(char *s, int *len)
+void	ft_putstr(char *s, int *len)
 {
 	int	i;
 
 	i = 0;
 	if (!s)
-		return (0);
-	while (s[i])
-	{
-		write(1, &s[i], 1);
-		(*len)++;
-		i++;
+		(*len) += write(1, "(null)", 6);
+	else {
+		while (s[i])
+		{
+			ft_putchar(s[i], len);
+			i++;
+		}
 	}
-	return (1);
 }

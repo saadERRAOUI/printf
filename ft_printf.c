@@ -6,7 +6,7 @@
 /*   By: serraoui <serraoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 17:09:57 by serraoui          #+#    #+#             */
-/*   Updated: 2023/12/01 20:30:04 by serraoui         ###   ########.fr       */
+/*   Updated: 2023/12/06 12:11:34 by serraoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,7 @@ void	ft_printf_args(const char *s, va_list *args, int *l, int pos)
 		ft_print_base(va_arg(*args, unsigned long), "0123456789abcdef", 16, l);
 	}
 	else if (s[pos] == 's')
-	{
-		if (!ft_putstr(va_arg(*args, char *), l))
-			ft_putstr("(null)", l);
-	}
+		ft_putstr(va_arg(*args, char *), l);
 	else
 		ft_putchar(s[pos], l);
 }
@@ -58,3 +55,11 @@ int	ft_printf(const char *s, ...)
 	va_end(args);
 	return (ret);
 }
+// #include <stdio.h>
+
+// int main() {
+// 	char *s=NULL;
+// 	ft_printf("%d\n", ft_printf("%d %x %X %p %s %c %u %i", 2147483648,-1,-1, NULL, s, '1', -2147483647));
+// 	//ft_printf("%s\n", NULL);
+// 	ft_printf("%s\n", NULL);
+// }

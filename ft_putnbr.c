@@ -6,7 +6,7 @@
 /*   By: serraoui <serraoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 17:35:39 by serraoui          #+#    #+#             */
-/*   Updated: 2023/11/18 12:00:43 by serraoui         ###   ########.fr       */
+/*   Updated: 2023/12/06 12:15:28 by serraoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_putnbr(int n, int *len)
 	if (n < 0)
 	{
 		ft_putchar('-', len);
-		number = n * -1;
+		number = (unsigned int)(-n);
 	}
 	if (number <= 9)
 		ft_putchar(number + '0', len);

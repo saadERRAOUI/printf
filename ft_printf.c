@@ -6,7 +6,7 @@
 /*   By: serraoui <serraoui@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 17:09:57 by serraoui          #+#    #+#             */
-/*   Updated: 2023/12/06 12:11:34 by serraoui         ###   ########.fr       */
+/*   Updated: 2023/12/06 12:17:14 by serraoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,3 @@ int	ft_printf(const char *s, ...)
 	va_end(args);
 	return (ret);
 }
-// #include <stdio.h>
-
-// int main() {
-// 	char *s=NULL;
-// 	ft_printf("%d\n", ft_printf("%d %x %X %p %s %c %u %i", 2147483648,-1,-1, NULL, s, '1', -2147483647));
-// 	//ft_printf("%s\n", NULL);
-// 	ft_printf("%s\n", NULL);
-// }

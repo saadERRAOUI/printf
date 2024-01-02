@@ -12,9 +12,9 @@
 
 #include "ft_printf.h"
 
-void	ft_print_base(unsigned long long n, const char *chars, int base, int *len)
+void	ft_print_base(unsigned long n, const char *chars, int base, int *len)
 {
-	if (n >= (unsigned long long)base)
-		ft_print_base(n / (unsigned long long)base, chars, base, len);
-	ft_putchar(chars[n % (unsigned long long)base], len);
+	if (n >= (unsigned long)base)
+		ft_print_base(n / base, chars, base, len);
+	ft_putchar(chars[n % base], len);
 }

@@ -16,7 +16,7 @@
 # include <stdarg.h>
 # include <unistd.h>
 
-void	ft_print_base(unsigned long long n, const char *chars, int base, int *len);
+void	ft_print_base(unsigned long n, const char *chars, int base, int *len);
 void	ft_putchar(char c, int *len);
 void	ft_putnbr(int n, int *len);
 int		ft_printf(const char *s, ...);
